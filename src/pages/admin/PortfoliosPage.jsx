@@ -6,9 +6,9 @@ import {
   useGetPortfolioMutation,
   useGetPortfoliosQuery,
   useUpdatePortfolioMutation,
-} from "../../redux/services/usersService";
+} from "../../redux/services/portfolioService";
 
-const UsersPage = () => {
+const PortfoliosPage = () => {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(1);
@@ -23,19 +23,24 @@ const UsersPage = () => {
 
   const columns = [
     {
-      title: "First name",
-      dataIndex: "firstName",
-      key: "firstName",
+      title: "Portfolio name",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: "Portfolio url",
-      dataIndex: "lastName",
-      key: "lastName",
+      dataIndex: "url",
+      key: "url",
+      render: (url) => (
+        <a rel="noreferrer" target="_blank" href={url}>
+          {url}
+        </a>
+      ),
     },
     {
       title: "Portfolio description",
-      dataIndex: "username",
-      key: "username",
+      dataIndex: "description",
+      key: "description",
     },
     {
       title: "Action",
@@ -76,6 +81,7 @@ const UsersPage = () => {
   const handleOk = async () => {
     try {
       let values = await form.validateFields();
+      values.photo = "6521485e1b06670014733226";
       if (selected === null) {
         await addPortfolio(values);
       } else {
@@ -113,9 +119,9 @@ const UsersPage = () => {
               alignItems: "center",
             }}
           >
-            <h1>Users ({data?.pagination.total})</h1>
+            <h1>Portfolios ({data?.pagination.total})</h1>
             <Button onClick={openModal} type="primary">
-              Add users
+              Add portfolios
             </Button>
           </div>
         )}
@@ -131,15 +137,15 @@ const UsersPage = () => {
         onChange={(page) => setPage(page)}
       />
       <Modal
-        title="Users data"
+        title="Portfolios data"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={closeModal}
-        okText={selected ? "Save user" : "Add user"}
+        okText={selected ? "Save portfolio" : "Add portfolios"}
       >
         <Form
           form={form}
-          name="users"
+          name="category"
           labelCol={{
             span: 24,
           }}
@@ -152,8 +158,8 @@ const UsersPage = () => {
           autoComplete="off"
         >
           <Form.Item
-            label="First name"
-            name="firstName"
+            label="Portfolio name"
+            name="name"
             rules={[
               {
                 required: true,
@@ -164,8 +170,8 @@ const UsersPage = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Last name"
-            name="lastName"
+            label="Portfolio Url"
+            name="url"
             rules={[
               {
                 required: true,
@@ -176,8 +182,8 @@ const UsersPage = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Username"
-            name="username"
+            label="Description"
+            name="description"
             rules={[
               {
                 required: true,
@@ -185,10 +191,7 @@ const UsersPage = () => {
               },
             ]}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item label="Password" name="password">
-            <Input />
+            <Input.TextArea />
           </Form.Item>
         </Form>
       </Modal>
@@ -196,4 +199,4 @@ const UsersPage = () => {
   );
 };
 
-export default UsersPage;
+export default PortfoliosPage;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import {
   MenuFoldOutlined,
@@ -7,20 +7,34 @@ import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
+  LoginOutlined,
+  BookOutlined,
 } from "@ant-design/icons";
 
 import "./style.scss";
 
 import { Layout, Menu, Button, theme } from "antd";
+import Cookies from "js-cookie";
+import { TOKEN } from "../../../constants";
+import { useDispatch } from "react-redux";
+import { controlAuthenticated } from "../../../redux/slices/authSlice";
 
 const { Header, Sider, Content } = Layout;
 
 const AdminLayout = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const logout = () => {
+    Cookies.remove(TOKEN);
+    dispatch(controlAuthenticated(false));
+    navigate("/");
+  };
 
   return (
     <Layout className="admin-layout">
@@ -41,11 +55,24 @@ const AdminLayout = () => {
               icon: <VideoCameraOutlined />,
               label: <Link to="/skills">Skills</Link>,
             },
+            {
+              key: "/users",
+              icon: <UploadOutlined />,
+              label: <Link to="/users">Users</Link>,
+            },
+            {
+              key: "/portfolios",
+              icon: <BookOutlined />,
+              label: <Link to="/portfolios">Portfolios</Link>,
+            },
 
             {
-              key: "/logout",
-              icon: <UploadOutlined />,
-              label: <Link to="/">Logout</Link>,
+              icon: <LoginOutlined />,
+              label: (
+                <Button danger onClick={logout}>
+                  Logout
+                </Button>
+              ),
             },
           ]}
         />

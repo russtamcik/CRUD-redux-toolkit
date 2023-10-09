@@ -8,8 +8,8 @@ import {
   editSkill,
   getSkill,
   getSkills,
-  putSkill,
   showModal,
+  updateSkill,
 } from "../../redux/slices/skillSlice";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -91,7 +91,7 @@ const SkillsPage = () => {
       if (selected === null) {
         await dispatch(addSkill(values));
       } else {
-        await dispatch(putSkill({ id: selected, values }));
+        await dispatch(updateSkill({ id: selected, values }));
       }
       closeModal();
       await dispatch(getSkill());

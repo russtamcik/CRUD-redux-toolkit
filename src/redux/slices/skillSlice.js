@@ -57,7 +57,7 @@ export const deleteSkill = createAsyncThunk(
     }
   }
 );
-export const putSkill = createAsyncThunk(
+export const updateSkill = createAsyncThunk(
   "skill/putSkill",
   async (action, { rejectWithValue }) => {
     try {
