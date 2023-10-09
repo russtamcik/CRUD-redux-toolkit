@@ -69,7 +69,7 @@ const AdminLayout = () => {
             {
               icon: <LoginOutlined />,
               label: (
-                <Button danger onClick={logout}>
+                <Button danger type="primary" onClick={logout}>
                   Logout
                 </Button>
               ),
