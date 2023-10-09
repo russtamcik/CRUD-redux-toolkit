@@ -12,12 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            isAuthenticated ? <Navigate to="/dashboard" /> : <HomePage />
-          }
-        />
+        <Route path="/" element={<HomePage />} />
         {isAuthenticated ? (
           <Route path="/" element={<AdminLayout />}>
             <Route path="dashboard" element={<DashboardPage />} />
