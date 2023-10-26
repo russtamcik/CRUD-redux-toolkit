@@ -6,6 +6,8 @@ import SkillsPage from "./pages/admin/SkillsPage";
 import UsersPage from "./pages/admin/UsersPage";
 import { useSelector } from "react-redux";
 import PortfoliosPage from "./pages/admin/PortfoliosPage";
+import EducationPage from "./pages/admin/EducationPage";
+import ExpriencePage from "./pages/admin/ExpriencePage";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -18,6 +20,8 @@ function App() {
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="skills" element={<SkillsPage />} />
             <Route path="portfolios" element={<PortfoliosPage />} />
+            <Route path="education" element={<EducationPage />} />
+            <Route path="experiences" element={<ExpriencePage />} />
             <Route path="users" element={<UsersPage />} />
           </Route>
         ) : null}

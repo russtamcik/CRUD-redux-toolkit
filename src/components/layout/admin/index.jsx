@@ -9,6 +9,7 @@ import {
   VideoCameraOutlined,
   LoginOutlined,
   BookOutlined,
+  FontSizeOutlined,
 } from "@ant-design/icons";
 
 import "./style.scss";
@@ -64,6 +65,16 @@ const AdminLayout = () => {
               key: "/portfolios",
               icon: <BookOutlined />,
               label: <Link to="/portfolios">Portfolios</Link>,
+            },
+            {
+              key: "/education",
+              icon: <FontSizeOutlined />,
+              label: <Link to="/education">Education</Link>,
+            },
+            {
+              key: "/experiences",
+              icon: <FontSizeOutlined />,
+              label: <Link to="/experiences">Experiences</Link>,
             },
 
             {

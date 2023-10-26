@@ -8,12 +8,18 @@ import portfolioReducer, {
   portfolioService,
 } from "../services/portfolioService";
 import usersReducer, { usersService } from "../services/usersService";
+import educationReducer, {
+  educationServices,
+} from "../services/educationService";
+import exprienceReducer, { exprienceServices } from "../services/exprience";
 
 const reducer = {
   skill: skillReducer,
   auth: authReducer,
   [portfolioService.reducerPath]: portfolioReducer,
   [usersService.reducerPath]: usersReducer,
+  [educationServices.reducerPath]: educationReducer,
+  [exprienceServices.reducerPath]: exprienceReducer,
 };
 
 export const Store = configureStore({
@@ -21,7 +27,9 @@ export const Store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(portfolioService.middleware)
-      .concat(usersService.middleware),
+      .concat(usersService.middleware)
+      .concat(educationServices.middleware)
+      .concat(exprienceServices.middleware),
 });
 
 const StoreProvider = ({ children }) => {

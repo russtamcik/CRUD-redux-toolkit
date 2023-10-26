@@ -6,9 +6,9 @@ import {
   useGetPortfolioMutation,
   useGetPortfoliosQuery,
   useUpdatePortfolioMutation,
-} from "../../redux/services/usersService";
+} from "../../redux/services/exprience";
 
-const UsersPage = () => {
+const ExpriencePage = () => {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(1);
@@ -23,19 +23,19 @@ const UsersPage = () => {
 
   const columns = [
     {
-      title: "First name",
-      dataIndex: "firstName",
-      key: "firstName",
+      title: "Work name",
+      dataIndex: "workName",
+      key: "workName",
     },
     {
-      title: "Last name",
-      dataIndex: "lastName",
-      key: "lastName",
+      title: "Company name",
+      dataIndex: "companyName",
+      key: "companyName",
     },
     {
-      title: "Username",
-      dataIndex: "username",
-      key: "username",
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
     },
     {
       title: "Action",
@@ -113,9 +113,9 @@ const UsersPage = () => {
               alignItems: "center",
             }}
           >
-            <h1>Users ({data?.pagination.total})</h1>
+            <h1>Exprience ({data?.pagination.total})</h1>
             <Button onClick={openModal} type="primary">
-              Add users
+              Add exprience
             </Button>
           </div>
         )}
@@ -135,7 +135,7 @@ const UsersPage = () => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={closeModal}
-        okText={selected ? "Save user" : "Add user"}
+        okText={selected ? "Save exprience" : "Add exprience"}
       >
         <Form
           form={form}
@@ -152,8 +152,8 @@ const UsersPage = () => {
           autoComplete="off"
         >
           <Form.Item
-            label="First name"
-            name="firstName"
+            label="Work name"
+            name="workName"
             rules={[
               {
                 required: true,
@@ -164,8 +164,8 @@ const UsersPage = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Last name"
-            name="lastName"
+            label="Company name"
+            name="companyName"
             rules={[
               {
                 required: true,
@@ -176,8 +176,8 @@ const UsersPage = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Username"
-            name="username"
+            label="Description"
+            name="description"
             rules={[
               {
                 required: true,
@@ -187,13 +187,10 @@ const UsersPage = () => {
           >
             <Input />
           </Form.Item>
-          <Form.Item label="Password" name="password">
-            <Input />
-          </Form.Item>
         </Form>
       </Modal>
     </Fragment>
   );
 };
 
-export default UsersPage;
+export default ExpriencePage;
