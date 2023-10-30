@@ -6,9 +6,9 @@ import {
   useGetPortfolioMutation,
   useGetPortfoliosQuery,
   useUpdatePortfolioMutation,
-} from "../../redux/services/exprience";
+} from "../../redux/services/messages";
 
-const ExpriencePage = () => {
+const MessagesPage = () => {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(1);
@@ -23,29 +23,19 @@ const ExpriencePage = () => {
 
   const columns = [
     {
-      title: "Work name",
-      dataIndex: "workName",
-      key: "workName",
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
     },
     {
-      title: "Company name",
-      dataIndex: "companyName",
+      title: "Message",
+      dataIndex: "message",
       key: "companyName",
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-    },
-    {
-      title: "Start date",
-      dataIndex: "startDate",
-      key: "startDate",
-    },
-    {
-      title: "End date",
-      dataIndex: "endDate",
-      key: "endDate",
+      title: "User",
+      dataIndex: "user",
+      key: "user",
     },
     {
       title: "Action",
@@ -123,9 +113,9 @@ const ExpriencePage = () => {
               alignItems: "center",
             }}
           >
-            <h1>Exprience ({data?.pagination.total})</h1>
+            <h1>Messages ({data?.pagination.total})</h1>
             <Button onClick={openModal} type="primary">
-              Add exprience
+              Add messages
             </Button>
           </div>
         )}
@@ -145,11 +135,11 @@ const ExpriencePage = () => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={closeModal}
-        okText={selected ? "Save exprience" : "Add exprience"}
+        okText={selected ? "Save messages" : "Add messages"}
       >
         <Form
           form={form}
-          name="users"
+          name="messages"
           labelCol={{
             span: 24,
           }}
@@ -162,8 +152,8 @@ const ExpriencePage = () => {
           autoComplete="off"
         >
           <Form.Item
-            label="Work name"
-            name="workName"
+            label="User"
+            name="user"
             rules={[
               {
                 required: true,
@@ -174,8 +164,8 @@ const ExpriencePage = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Company name"
-            name="companyName"
+            label="Title"
+            name="title"
             rules={[
               {
                 required: true,
@@ -186,32 +176,8 @@ const ExpriencePage = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Start date"
-            name="startDate"
-            rules={[
-              {
-                required: true,
-                message: "Please fill!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="End date"
-            name="endDate"
-            rules={[
-              {
-                required: true,
-                message: "Please fill!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Description"
-            name="description"
+            label="Message"
+            name="message"
             rules={[
               {
                 required: true,
@@ -227,4 +193,4 @@ const ExpriencePage = () => {
   );
 };
 
-export default ExpriencePage;
+export default MessagesPage;

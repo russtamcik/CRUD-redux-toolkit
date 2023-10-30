@@ -38,6 +38,16 @@ const EducationPage = () => {
       key: "level",
     },
     {
+      title: "Start date",
+      dataIndex: "startDate",
+      key: "startDate",
+    },
+    {
+      title: "End date",
+      dataIndex: "endDate",
+      key: "endDate",
+    },
+    {
       title: "Action",
       render: (_, row) => {
         return (
@@ -178,6 +188,30 @@ const EducationPage = () => {
           <Form.Item
             label="Level"
             name="level"
+            rules={[
+              {
+                required: true,
+                message: "Please fill!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Start date"
+            name="startDate"
+            rules={[
+              {
+                required: true,
+                message: "Please fill!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="End date"
+            name="endDate"
             rules={[
               {
                 required: true,

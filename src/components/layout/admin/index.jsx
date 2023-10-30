@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UploadOutlined,
-  UserOutlined,
+  DashboardOutlined,
   VideoCameraOutlined,
   LoginOutlined,
   BookOutlined,
   FontSizeOutlined,
+  DeploymentUnitOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 
 import "./style.scss";
@@ -25,7 +27,7 @@ const { Header, Sider, Content } = Layout;
 const AdminLayout = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -34,7 +36,9 @@ const AdminLayout = () => {
   const logout = () => {
     Cookies.remove(TOKEN);
     dispatch(controlAuthenticated(false));
-    navigate("/");
+    window.location.href =
+      "https://inspiring-squirrel-bd16cf.netlify.app/dashboard";
+    return;
   };
 
   return (
@@ -48,7 +52,7 @@ const AdminLayout = () => {
           items={[
             {
               key: "/dashboard",
-              icon: <UserOutlined />,
+              icon: <DashboardOutlined />,
               label: <Link to="/dashboard">Dashboard</Link>,
             },
             {
@@ -73,8 +77,13 @@ const AdminLayout = () => {
             },
             {
               key: "/experiences",
-              icon: <FontSizeOutlined />,
+              icon: <DeploymentUnitOutlined />,
               label: <Link to="/experiences">Experiences</Link>,
+            },
+            {
+              key: "/messages",
+              icon: <MessageOutlined />,
+              label: <Link to="/messages">Messages</Link>,
             },
 
             {

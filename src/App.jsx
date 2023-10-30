@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import PortfoliosPage from "./pages/admin/PortfoliosPage";
 import EducationPage from "./pages/admin/EducationPage";
 import ExpriencePage from "./pages/admin/ExpriencePage";
+import MessagesPage from "./pages/admin/MessagesPage";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -23,6 +24,7 @@ function App() {
             <Route path="education" element={<EducationPage />} />
             <Route path="experiences" element={<ExpriencePage />} />
             <Route path="users" element={<UsersPage />} />
+            <Route path="messages" element={<MessagesPage />} />
           </Route>
         ) : null}
         <Route path="*" element={<Navigate to="/ " />} />
