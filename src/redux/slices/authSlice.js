@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 const initialState = {
   isAuthenticated: Boolean(Cookies.get(TOKEN)),
 };
- 
+
 const authSlice = createSlice({
   name: "auth",
   initialState,

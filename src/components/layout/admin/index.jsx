@@ -17,6 +17,8 @@ import {
 import "./style.scss";
 
 import { Layout, Menu, Button, theme } from "antd";
+import Cookies from "js-cookie";
+import { TOKEN } from "../../../constants";
 
 const { Header, Sider, Content } = Layout;
 
@@ -30,8 +32,10 @@ const AdminLayout = () => {
   } = theme.useToken();
 
   const logout = () => {
+    Cookies.remove(TOKEN);
+
     window.location.href =
-      "https://inspiring-squirrel-bd16cf.netlify.app/dashboard";
+      "https://inspiring-squirrel-bd16cf.netlify.app/login";
     return;
   };
 
