@@ -17,8 +17,6 @@ import {
 import "./style.scss";
 
 import { Layout, Menu, Button, theme } from "antd";
-import Cookies from "js-cookie";
-import { TOKEN } from "../../../constants";
 import { useDispatch } from "react-redux";
 import { controlAuthenticated } from "../../../redux/slices/authSlice";
 
