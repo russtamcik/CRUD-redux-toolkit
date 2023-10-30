@@ -34,7 +34,6 @@ const AdminLayout = () => {
   } = theme.useToken();
 
   const logout = () => {
-    Cookies.remove(TOKEN);
     dispatch(controlAuthenticated(false));
     window.location.href =
       "https://inspiring-squirrel-bd16cf.netlify.app/dashboard";
