@@ -17,14 +17,12 @@ import {
 import "./style.scss";
 
 import { Layout, Menu, Button, theme } from "antd";
-import { useDispatch } from "react-redux";
-import { controlAuthenticated } from "../../../redux/slices/authSlice";
 
 const { Header, Sider, Content } = Layout;
 
 const AdminLayout = () => {
   const location = useLocation();
-  const dispatch = useDispatch();
+
   // const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -32,7 +30,6 @@ const AdminLayout = () => {
   } = theme.useToken();
 
   const logout = () => {
-    dispatch(controlAuthenticated(false));
     window.location.href =
       "https://inspiring-squirrel-bd16cf.netlify.app/dashboard";
     return;

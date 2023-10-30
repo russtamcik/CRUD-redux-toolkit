@@ -1,29 +1,25 @@
-import { Button, Form, Input, Modal, Space, Table, message } from "antd";
-import { Fragment, useEffect } from "react";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { Fragment, useState } from "react";
+import { Button, Form, Input, Modal, Pagination, Space, Table } from "antd";
 import {
-  addSkill,
-  controlModal,
-  deleteSkill,
-  editSkill,
-  getSkill,
-  getSkills,
-  showModal,
-  updateSkill,
-} from "../../redux/slices/skillSlice";
-
-import { useDispatch, useSelector } from "react-redux";
+  useAddPortfolioMutation,
+  useDeletePortfolioMutation,
+  useGetPortfolioMutation,
+  useGetPortfoliosQuery,
+  useUpdatePortfolioMutation,
+} from "../../redux/services/skillService";
 
 const SkillsPage = () => {
-  const dispatch = useDispatch();
   const [form] = Form.useForm();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const [selected, setSelected] = useState(null);
 
-  const { skills, isModalOpen, selected, loading, total, btnLoading } =
-    useSelector((state) => state.skill);
+  const { data, isLoading, refetch } = useGetPortfoliosQuery(page);
 
-  useEffect(() => {
-    dispatch(getSkill());
-  }, [dispatch]);
+  const [addPortfolio] = useAddPortfolioMutation();
+  const [getPortfolio] = useGetPortfolioMutation();
+  const [updatePortfolio] = useUpdatePortfolioMutation();
+  const [deletePortfolio] = useDeletePortfolioMutation();
 
   const columns = [
     {
@@ -32,32 +28,25 @@ const SkillsPage = () => {
       key: "name",
     },
     {
-      title: "Percents",
+      title: "Percent",
       dataIndex: "percent",
       key: "percent",
     },
-
     {
       title: "Action",
       render: (_, row) => {
         return (
           <Space size="middle">
-            <Button
-              type="primary"
-              onClick={async () => {
-                await dispatch(editSkill(row._id));
-                await dispatch(getSkill());
-                let { payload } = await dispatch(getSkills(row._id));
-                console.log(payload);
-                form.setFieldsValue(payload);
-              }}
-            >
+            <Button type="primary" onClick={() => editPortfolio(row._id)}>
               Edit
             </Button>
             <Button
               danger
               type="primary"
-              onClick={() => confirmDeleteSkill(row._id)}
+              onClick={async () => {
+                await deletePortfolio(row._id);
+                refetch();
+              }}
             >
               Delete
             </Button>
@@ -67,43 +56,49 @@ const SkillsPage = () => {
     },
   ];
 
-  function confirmDeleteSkill(id) {
-    Modal.confirm({
-      title: "Do you want to delete this skill ?",
-      icon: <ExclamationCircleOutlined />,
-      onOk: async () => {
-        // await dispatch(deleteSkill(row.id));
-        await dispatch(deleteSkill(id));
-        await dispatch(getSkill());
-      },
-      okText: "Yes",
-      cancelText: "No",
-    });
-  }
-
   const closeModal = () => {
-    dispatch(controlModal());
+    setIsModalOpen(false);
   };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+    setSelected(null);
+    form.resetFields();
+  };
+
+  console.log(data);
 
   const handleOk = async () => {
     try {
       let values = await form.validateFields();
       if (selected === null) {
-        await dispatch(addSkill(values));
+        await addPortfolio(values);
       } else {
-        await dispatch(updateSkill({ id: selected, values }));
+        await updatePortfolio({ id: selected, body: values });
       }
       closeModal();
-      await dispatch(getSkill());
+      refetch();
     } catch (error) {
-      message.error("An error occurred");
+      console.log(error);
     }
   };
+
+  async function editPortfolio(id) {
+    try {
+      setSelected(id);
+      setIsModalOpen(true);
+      const { data } = await getPortfolio(id);
+      console.log(data);
+      form.setFieldsValue(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <Fragment>
       <Table
-        loading={loading}
+        loading={isLoading}
         bordered
         title={() => (
           <div
@@ -113,28 +108,33 @@ const SkillsPage = () => {
               alignItems: "center",
             }}
           >
-            <h1>Skills ({total})</h1>
-            <Button onClick={() => dispatch(showModal(form))} type="primary">
-              Add skill
+            <h1>Users ({data?.pagination.total})</h1>
+            <Button onClick={openModal} type="primary">
+              Add users
             </Button>
           </div>
         )}
         columns={columns}
-        dataSource={skills}
+        dataSource={data?.data}
         rowKey="_id"
+        pagination={false}
+        scroll={{ x: 800 }}
       />
-
+      <Pagination
+        total={data?.pagination.total}
+        current={page}
+        onChange={(page) => setPage(page)}
+      />
       <Modal
-        title="Skills data"
-        confirmLoading={btnLoading}
+        title="Users data"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={closeModal}
-        okText={selected ? "Save skill" : "Add skill"}
+        okText={selected ? "Save user" : "Add user"}
       >
         <Form
           form={form}
-          name="category"
+          name="users"
           labelCol={{
             span: 24,
           }}
@@ -147,7 +147,7 @@ const SkillsPage = () => {
           autoComplete="off"
         >
           <Form.Item
-            label="Skill name"
+            label="Skill Name"
             name="name"
             rules={[
               {
@@ -159,7 +159,7 @@ const SkillsPage = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Percent"
+            label="Percents"
             name="percent"
             rules={[
               {
