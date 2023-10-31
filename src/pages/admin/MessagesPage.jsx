@@ -38,12 +38,17 @@ const MessagesPage = () => {
       key: "user",
     },
     {
+      title: "Answer",
+      dataIndex: "answer",
+      key: "answer",
+    },
+    {
       title: "Action",
       render: (_, row) => {
         return (
           <Space size="middle">
             <Button type="primary" onClick={() => editPortfolio(row._id)}>
-              Edit
+              Answers
             </Button>
             <Button
               danger
@@ -152,36 +157,12 @@ const MessagesPage = () => {
           autoComplete="off"
         >
           <Form.Item
-            label="User"
-            name="user"
+            label="Answer"
+            name="answer"
             rules={[
               {
                 required: true,
                 message: "Please fill !",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Title"
-            name="title"
-            rules={[
-              {
-                required: true,
-                message: "Please fill!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Message"
-            name="message"
-            rules={[
-              {
-                required: true,
-                message: "Please fill!",
               },
             ]}
           >
