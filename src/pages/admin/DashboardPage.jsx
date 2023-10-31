@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSkill } from "../../redux/slices/skillSlice";
 import { Spin } from "antd";
-import { Progress } from "antd";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
@@ -32,11 +31,6 @@ const DashboardPage = () => {
           </div>
         )}
       </div>
-      <Progress percent={30} />
-      <Progress percent={50} status="active" />
-      <Progress percent={70} status="exception" />
-      <Progress percent={100} />
-      <Progress percent={50} showInfo={false} />
     </>
   );
 };
