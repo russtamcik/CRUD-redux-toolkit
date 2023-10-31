@@ -14,7 +14,8 @@ const SkillsPage = () => {
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState(null);
 
-  const { data, isLoading, refetch } = useGetPortfoliosQuery(page);
+  const [search, setSearch] = useState("");
+  const { data, isLoading, refetch } = useGetPortfoliosQuery({ page, search });
 
   const [addPortfolio] = useAddPortfolioMutation();
   const [getPortfolio] = useGetPortfolioMutation();
@@ -97,6 +98,7 @@ const SkillsPage = () => {
 
   return (
     <Fragment>
+      <h1>Skills ({data?.pagination.total})</h1>
       <Table
         loading={isLoading}
         bordered
@@ -108,14 +110,22 @@ const SkillsPage = () => {
               alignItems: "center",
             }}
           >
-            <h1>Users ({data?.pagination.total})</h1>
+            <Input
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+              style={{ width: "auto", flexGrow: 1 }}
+              placeholder="Searching..."
+            />
             <Button onClick={openModal} type="primary">
-              Add users
+              Add Skills
             </Button>
           </div>
         )}
         columns={columns}
-        dataSource={data?.data}
+        dataSource={data?.data.filter((item) => item.name.includes(search))}
         rowKey="_id"
         pagination={false}
         scroll={{ x: 800 }}
@@ -126,15 +136,15 @@ const SkillsPage = () => {
         onChange={(page) => setPage(page)}
       />
       <Modal
-        title="Users data"
+        title="Skills data"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={closeModal}
-        okText={selected ? "Save user" : "Add user"}
+        okText={selected ? "Save skill" : "Add skill"}
       >
         <Form
           form={form}
-          name="users"
+          name="skills"
           labelCol={{
             span: 24,
           }}

@@ -14,7 +14,9 @@ const EducationPage = () => {
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState(null);
 
-  const { data, isLoading, refetch } = useGetPortfoliosQuery(page);
+  const [search, setSearch] = useState("");
+
+  const { data, isLoading, refetch } = useGetPortfoliosQuery({ page, search });
 
   const [addPortfolio] = useAddPortfolioMutation();
   const [getPortfolio] = useGetPortfolioMutation();
@@ -112,6 +114,8 @@ const EducationPage = () => {
 
   return (
     <Fragment>
+      <h1>Education ({data?.pagination.total})</h1>
+
       <Table
         loading={isLoading}
         bordered
@@ -123,7 +127,15 @@ const EducationPage = () => {
               alignItems: "center",
             }}
           >
-            <h1>Education ({data?.pagination.total})</h1>
+            <Input
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+              style={{ width: "auto", flexGrow: 1 }}
+              placeholder="Searching..."
+            />
             <Button onClick={openModal} type="primary">
               Add education
             </Button>
