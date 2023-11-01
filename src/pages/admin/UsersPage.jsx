@@ -39,6 +39,11 @@ const UsersPage = () => {
       key: "username",
     },
     {
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+    },
+    {
       title: "Action",
       render: (_, row) => {
         return (
@@ -189,6 +194,18 @@ const UsersPage = () => {
           <Form.Item
             label="Username"
             name="username"
+            rules={[
+              {
+                required: true,
+                message: "Please fill!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Role"
+            name="role"
             rules={[
               {
                 required: true,
